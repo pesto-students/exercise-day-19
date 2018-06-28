@@ -2,17 +2,18 @@ const { getDb } = require('./database');
 
 const performManipulation = async () => {
   const db = await getDb();
-  const found = await db.collection('projects').find();
+  const projectsCollection = db.collection('projects');
+  const found = await projectsCollection.find();
   console.log(found);
 
-  const insertOne = await db.collection('projects').insertOne({
+  const insertOne = await projectsCollection.insertOne({
     developer: 'Google',
     project: 'V8',
   });
 
   console.log(insertOne);
 
-  const insertMany = await db.collection('projects').insertMany([
+  const insertMany = await projectsCollection.insertMany([
     {
       developer: 'Amazon',
       project: 'Alexa',
@@ -26,7 +27,7 @@ const performManipulation = async () => {
 
 
   return found;
-  // const collection = await db.collection('projects');
+  // const collection = await projectsCollection;
   // Find some documents
 };
 
