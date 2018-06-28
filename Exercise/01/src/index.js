@@ -1,14 +1,28 @@
 /* Q1 (*)
   Return the number of movies in the "movies" collection without using array.length
 */
-export const getMoviesCount = async () => {};
+export const getMoviesCount = async db => db.collection('movies').find().count();
 
 /* Q2 (*)
   Return the first movie with imdb rating = 9.2 and year = 1974.
   Also, use mongodb projections to only get title from mongodb as opposed
   to accessing title property from the object
 */
-export const movieRating = async () => {};
+export const movieRating = async (db) => {
+  return db.collection('movieDetails').aggregate([
+    {
+      $lookup: {
+        from: 'movies',
+        localField: 'imdb[id]',
+        foreignField: 'imdb',
+        as: 'movieDetails',
+      },
+    },
+  ]).toArray((err, res) => {
+    if (err) throw err;
+    console.log(JSON.stringify(res));
+  });
+};
 
 /* Q3 (*)
   Return the number of movies written by all these people (exactly these people in this order):
