@@ -2,8 +2,8 @@
   Return the number of movies in the "movies" collection without using array.length
 */
 export const getMoviesCount = async (db) => {
-  const movies = await db.collection('movies').count();
-  return movies;
+  const movieCount = await db.collection('movies').count();
+  return movieCount;
 };
 
 /* Q2 (*)
@@ -11,8 +11,9 @@ export const getMoviesCount = async (db) => {
   Also, use mongodb projections to only get title from mongodb as opposed
   to accessing title property from the object
 */
-export const movieRating = async () => {
-
+export const movieRating = async (db) => {
+  const movie = await db.collection('movieDetails').findOne({ $and: [{ 'imdb.rating': 9.2 }, { year: 1974 }] }, { _id: 0, title: 1 });
+  return movie;
 };
 
 /* Q3 (*)
@@ -22,17 +23,26 @@ export const movieRating = async () => {
   Damon Lindelof
   Gene Roddenberry
 */
-export const writersIntersection = async () => {};
+export const writersIntersection = async (db) => {
+  const movieCount = await db.collection('movieDetails').count({ writers: ['Roberto Orci', 'Alex Kurtzman', 'Damon Lindelof', 'Gene Roddenberry'] }, { _id: 0, writers: 1 });
+  return movieCount;
+};
 
 /* Q4 (*)
   Return the number of movies written by any of the writers in Q3
 */
-export const writersUnion = async () => {};
+export const writersUnion = async (db) => {
+  const movieCount = await db.collection('movieDetails').count({ $or: [{ writers: 'Roberto Orci' }, { writers: 'Alex Kurtzman' }, { writers: 'Damon Lindelof' }, { writers: 'Gene Roddenberry' }] }, { _id: 0, title: 1 });
+  return movieCount;
+};
 
 /* Q5 (*)
   Return the number of movies in which actor is "Jackie Chan"
 */
-export const actor = async () => {};
+export const actor = async (db) => {
+  const movieCount = await db.collection('movieDetails').count({ actors: 'Jackie Chan' }, { _id: 0, title: 1 });
+  return movieCount;
+};
 
 /* Q6 (*)
   Return the number of movies in which actor "Jackie Chan" is second
