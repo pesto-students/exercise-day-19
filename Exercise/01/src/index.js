@@ -34,7 +34,7 @@ export const writersUnion = async () => {};
   Return the number of movies in which actor is "Jackie Chan"
 */
 export const actor = async (db) => {
-  return db.movieDetails.find({ actors: 'Jackie Chan' });
+  return db.movieDetails.find({ actors: 'Jackie Chan' }).count;
 };
 
 /* Q6 (*)
