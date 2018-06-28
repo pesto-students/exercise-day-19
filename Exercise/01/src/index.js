@@ -48,7 +48,10 @@ export const actor = async (db) => {
   Return the number of movies in which actor "Jackie Chan" is second
   in the array "actors"
 */
-export const positionalActor = async () => {};
+export const positionalActor = async (db) => {
+  const movieCount = await db.collection('movieDetails').count({ 'actors.1': 'Jackie Chan' }, { _id: 0, title: 1 });
+  return movieCount;
+};
 
 /* Q7 (*)
   Return the first movie with imdb rating greater than or equal to 9.0
