@@ -1,14 +1,24 @@
+import { getDb } from "./database";
+
 /* Q1 (*)
   Return the number of movies in the "movies" collection without using array.length
 */
-export const getMoviesCount = async () => {};
+export const getMoviesCount = async (MyDb) => {
+  const movieCollection = MyDb.collection('movies');
+  return  await movieCollection.find().count();
+};
 
 /* Q2 (*)
   Return the first movie with imdb rating = 9.2 and year = 1974.
   Also, use mongodb projections to only get title from mongodb as opposed
   to accessing title property from the object
 */
-export const movieRating = async () => {};
+export const movieRating = async (MyDb) => {
+  const mdetail = MyDb.collection('movieDetails');
+  const response = await mdetail.findOne({"imdb.rating": {$gte: 9.0}, "year": 1974});
+  return {"title": response.title};
+
+};
 
 /* Q3 (*)
   Return the number of movies written by all these people (exactly these people in this order):
@@ -17,7 +27,10 @@ export const movieRating = async () => {};
   Damon Lindelof
   Gene Roddenberry
 */
-export const writersIntersection = async () => {};
+export const writersIntersection = async (MyDb) => {
+  const mdetail = MyDb.collection('movieDetails');
+  return await mdetail.find({"writers": [ "Roberto Orci", "Alex Kurtzman", "Damon Lindelof", "Gene Roddenberry" ]}).count();
+};
 
 /* Q4 (*)
   Return the number of movies written by any of the writers in Q3
