@@ -1,14 +1,22 @@
+// import { WSAEWOULDBLOCK } from "constants";
+
 /* Q1 (*)
   Return the number of movies in the "movies" collection without using array.length
 */
-export const getMoviesCount = async () => {};
+export const getMoviesCount = async (db) => {
+  const movieCount = db.collection('movies').count();
+  return movieCount;
+};
 
 /* Q2 (*)
   Return the first movie with imdb rating = 9.2 and year = 1974.
   Also, use mongodb projections to only get title from mongodb as opposed
   to accessing title property from the object
 */
-export const movieRating = async () => {};
+export const movieRating = async (db) => {
+  const  { title } = db.collection('movies').findOne({ 'imdb': 'tt0071562', 'year' : 1974 },{'title':1});
+  return title;
+};
 
 /* Q3 (*)
   Return the number of movies written by all these people (exactly these people in this order):
@@ -17,7 +25,9 @@ export const movieRating = async () => {};
   Damon Lindelof
   Gene Roddenberry
 */
-export const writersIntersection = async () => {};
+export const writersIntersection = async (db) => {
+  const movieList = db.collection('movieDetail').find({'writers': ['Roberto Orci','Alex Kurtzman','Damon Lindelof','Gene Roddenberry']});
+};
 
 /* Q4 (*)
   Return the number of movies written by any of the writers in Q3
