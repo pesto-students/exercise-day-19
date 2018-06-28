@@ -4,8 +4,8 @@ import { getDb } from "./database";
   Return the number of movies in the "movies" collection without using array.length
 */
 export const getMoviesCount = async () => {
-  const mydb = await getDb('video');
-  const movieCollection = mydb.collection('movies');
+  const MyDb = await getDb('video');
+  const movieCollection = MyDb.collection('movies');
   return  await movieCollection.find().count();
 };
 
