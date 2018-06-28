@@ -1,14 +1,18 @@
 /* Q1 (*)
   Return the number of movies in the "movies" collection without using array.length
 */
-export const getMoviesCount = async () => {};
+export const getMoviesCount = async (db) => {
+  return db.collection('movies').count();
+};
 
 /* Q2 (*)
   Return the first movie with imdb rating = 9.2 and year = 1974.
   Also, use mongodb projections to only get title from mongodb as opposed
   to accessing title property from the object
 */
-export const movieRating = async () => {};
+export const movieRating = async (db) => {
+  return db.collection('movieDetails').find();
+};
 
 /* Q3 (*)
   Return the number of movies written by all these people (exactly these people in this order):
@@ -17,7 +21,9 @@ export const movieRating = async () => {};
   Damon Lindelof
   Gene Roddenberry
 */
-export const writersIntersection = async () => {};
+export const writersIntersection = async (db) => {
+  return db.collection('movieDetails');
+};
 
 /* Q4 (*)
   Return the number of movies written by any of the writers in Q3
@@ -27,7 +33,9 @@ export const writersUnion = async () => {};
 /* Q5 (*)
   Return the number of movies in which actor is "Jackie Chan"
 */
-export const actor = async () => {};
+export const actor = async (db) => {
+  return db.collection('movieDetails').find({ actors: 'Jackie Chan' }).count;
+};
 
 /* Q6 (*)
   Return the number of movies in which actor "Jackie Chan" is second
