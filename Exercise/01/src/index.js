@@ -3,8 +3,7 @@ import { getDb } from "./database";
 /* Q1 (*)
   Return the number of movies in the "movies" collection without using array.length
 */
-export const getMoviesCount = async () => {
-  const MyDb = await getDb('video');
+export const getMoviesCount = async (MyDb) => {
   const movieCollection = MyDb.collection('movies');
   return  await movieCollection.find().count();
 };
@@ -14,7 +13,12 @@ export const getMoviesCount = async () => {
   Also, use mongodb projections to only get title from mongodb as opposed
   to accessing title property from the object
 */
-export const movieRating = async () => {};
+export const movieRating = async (MyDb) => {
+  const mdetail = MyDb.collection('movieDetails');
+  const response = await mdetail.find({"imdb.rating": {$gte: 9.0}, "year": 1974}).limit(1);
+  return response;
+
+};
 
 /* Q3 (*)
   Return the number of movies written by all these people (exactly these people in this order):
