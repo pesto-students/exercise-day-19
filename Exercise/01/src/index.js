@@ -1,7 +1,12 @@
+// import { WSAEWOULDBLOCK } from "constants";
+
 /* Q1 (*)
   Return the number of movies in the "movies" collection without using array.length
 */
-export const getMoviesCount = async () => {};
+export const getMoviesCount = async (db) => {
+  const movieCount = db.collection('movies').count();
+  return movieCount;
+};
 
 /* Q2 (*)
   Return the first movie with imdb rating = 9.2 and year = 1974.
