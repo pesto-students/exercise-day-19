@@ -15,8 +15,8 @@ export const getMoviesCount = async (MyDb) => {
 */
 export const movieRating = async (MyDb) => {
   const mdetail = MyDb.collection('movieDetails');
-  const response = await mdetail.find({"imdb.rating": {$gte: 9.0}, "year": 1974}).limit(1);
-  return response;
+  const response = await mdetail.findOne({"imdb.rating": {$gte: 9.0}, "year": 1974});
+  return {"title": response.title};
 
 };
 
