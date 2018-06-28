@@ -2,14 +2,15 @@
   "name": "exercise1",
   "version": "1.0.0",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "index": "nodemon index.js"
   },
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.3",
     "crypto": "^1.0.1",
     "express": "^4.16.3",
-    "mongodb": "^3.1.0-beta4",
+    "mongodb": "^3.1.0",
     "morgan": "^1.9.0",
     "nodemon": "^1.17.4"
   },
