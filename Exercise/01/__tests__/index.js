@@ -29,7 +29,7 @@ describe('Mongo Queries', () => {
     client.close();
   });
 
-  describe('Read', () => {
+  describe.only('Read', () => {
     // 1
     describe('getMoviesCount', () => {
       test('should return number of documents in movies collection', async () => {
