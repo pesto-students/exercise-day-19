@@ -1,14 +1,20 @@
 /* Q1 (*)
   Return the number of movies in the "movies" collection without using array.length
 */
-export const getMoviesCount = async () => {};
+export const getMoviesCount = async (db) => {
+  const movieCount = await db.collection('movies').count();
+  return movieCount;
+};
 
 /* Q2 (*)
   Return the first movie with imdb rating = 9.2 and year = 1974.
   Also, use mongodb projections to only get title from mongodb as opposed
   to accessing title property from the object
 */
-export const movieRating = async () => {};
+export const movieRating = async (db) => {
+  const movie = await db.collection('movieDetails').findOne({ 'imdb.rating': 9, year: 1974 }, { fields: { title: 1, _id: 0 } });
+  return movie;
+};
 
 /* Q3 (*)
   Return the number of movies written by all these people (exactly these people in this order):
@@ -17,29 +23,44 @@ export const movieRating = async () => {};
   Damon Lindelof
   Gene Roddenberry
 */
-export const writersIntersection = async () => {};
+export const writersIntersection = async (db) => {
+  const movieCount = await db.collection('movieDetails').count({ writers: ['Roberto Orci', 'Alex Kurtzman', 'Damon Lindelof', 'Gene Roddenberry'] });
+  return movieCount;
+};
 
 /* Q4 (*)
   Return the number of movies written by any of the writers in Q3
 */
-export const writersUnion = async () => {};
+export const writersUnion = async (db) => {
+  const movieCount = await db.collection('movieDetails').count({ $or: [{ writers: 'Roberto Orci' }, { writers: 'Alex Kurtzman' }, { writers: 'Damon Lindelof' }, { writers: 'Gene Roddenberry' }] });
+  return movieCount;
+};
 
 /* Q5 (*)
   Return the number of movies in which actor is "Jackie Chan"
 */
-export const actor = async () => {};
+export const actor = async (db) => {
+  const movieCount = await db.collection('movieDetails').count({ actors: 'Jackie Chan' });
+  return movieCount;
+};
 
 /* Q6 (*)
   Return the number of movies in which actor "Jackie Chan" is second
   in the array "actors"
 */
-export const positionalActor = async () => {};
+export const positionalActor = async (db) => {
+  const movieCount = await db.collection('movieDetails').count({ 'actors.1': 'Jackie Chan' });
+  return movieCount;
+};
 
 /* Q7 (*)
   Return the first movie with imdb rating greater than or equal to 9.0
   and less than or equal to 9.2
 */
-export const comparisonOperator = async () => {};
+export const comparisonOperator = async (db) => {
+  const movie = await db.collection('movieDetails').count({ 'imdb.rating': { $gt: 9, $lt: 9.2 } });
+  return movie;
+};
 
 /* Q8 (*)
   Return the number of movies which have an actual rating opposed to
