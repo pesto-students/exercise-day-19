@@ -1,7 +1,13 @@
+import { getDb } from "./database";
+
 /* Q1 (*)
   Return the number of movies in the "movies" collection without using array.length
 */
-export const getMoviesCount = async () => {};
+export const getMoviesCount = async () => {
+  const mydb = await getDb('video');
+  const movieCollection = mydb.collection('movies');
+  return  await movieCollection.find().count();
+};
 
 /* Q2 (*)
   Return the first movie with imdb rating = 9.2 and year = 1974.
