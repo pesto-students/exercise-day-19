@@ -15,7 +15,8 @@ export const getMoviesCount = async (dbvideo) => {
   to accessing title property from the object
 */
 export const movieRating = async (dbvideo) => {
-const detailcollection = dbvideo.collection('movieDetails').find();
+const title1 = await dbvideo.collection('movieDetails').findOne({"year":1974,"imdb.rating":9.0},{fields : {"title":1,_id:0} } );
+return title1;
 };
 
 /* Q3 (*)
