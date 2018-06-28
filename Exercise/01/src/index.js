@@ -11,7 +11,7 @@ export const getMoviesCount = async (db) => {
   to accessing title property from the object
 */
 export const movieRating = async (db) => {
-
+  return db.collection('movieDetails').find();
 };
 
 /* Q3 (*)
@@ -34,7 +34,7 @@ export const writersUnion = async () => {};
   Return the number of movies in which actor is "Jackie Chan"
 */
 export const actor = async (db) => {
-  return db.movieDetails.find({ actors: 'Jackie Chan' }).count;
+  return db.collection('movieDetails').find({ actors: 'Jackie Chan' }).count;
 };
 
 /* Q6 (*)
