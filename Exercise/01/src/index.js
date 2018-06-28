@@ -24,7 +24,7 @@ export const movieRating = async (db) => {
   Gene Roddenberry
 */
 export const writersIntersection = async (db) => {
-  const movieCount = await db.collection('movieDetails').count({ writers: ['Roberto Orci', 'Alex Kurtzman', 'Damon Lindelof', 'Gene Roddenberry'] }, { _id: 0, writers: 1 });
+  const movieCount = await db.collection('movieDetails').count({ writers: ['Roberto Orci', 'Alex Kurtzman', 'Damon Lindelof', 'Gene Roddenberry'] });
   return movieCount;
 };
 
@@ -32,7 +32,7 @@ export const writersIntersection = async (db) => {
   Return the number of movies written by any of the writers in Q3
 */
 export const writersUnion = async (db) => {
-  const movieCount = await db.collection('movieDetails').count({ $or: [{ writers: 'Roberto Orci' }, { writers: 'Alex Kurtzman' }, { writers: 'Damon Lindelof' }, { writers: 'Gene Roddenberry' }] }, { _id: 0, title: 1 });
+  const movieCount = await db.collection('movieDetails').count({ $or: [{ writers: 'Roberto Orci' }, { writers: 'Alex Kurtzman' }, { writers: 'Damon Lindelof' }, { writers: 'Gene Roddenberry' }] });
   return movieCount;
 };
 
@@ -40,7 +40,7 @@ export const writersUnion = async (db) => {
   Return the number of movies in which actor is "Jackie Chan"
 */
 export const actor = async (db) => {
-  const movieCount = await db.collection('movieDetails').count({ actors: 'Jackie Chan' }, { _id: 0, title: 1 });
+  const movieCount = await db.collection('movieDetails').count({ actors: 'Jackie Chan' });
   return movieCount;
 };
 
@@ -49,7 +49,7 @@ export const actor = async (db) => {
   in the array "actors"
 */
 export const positionalActor = async (db) => {
-  const movieCount = await db.collection('movieDetails').count({ 'actors.1': 'Jackie Chan' }, { _id: 0, title: 1 });
+  const movieCount = await db.collection('movieDetails').count({ 'actors.1': 'Jackie Chan' });
   return movieCount;
 };
 
