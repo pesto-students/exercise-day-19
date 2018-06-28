@@ -12,7 +12,7 @@ export const getMoviesCount = async (db) => {
   to accessing title property from the object
 */
 export const movieRating = async (db) => {
-  const movie = await db.collection('movieDetails').findOne({ $and: [{ 'imdb.rating': 9.2 }, { year: 1974 }] }, { _id: 0, title: 1 });
+  const movie = await db.collection('movieDetails').findOne({ 'imdb.rating': 9, year: 1974 }, { fields: { title: 1, _id: 0 } });
   return movie;
 };
 
@@ -57,7 +57,10 @@ export const positionalActor = async (db) => {
   Return the first movie with imdb rating greater than or equal to 9.0
   and less than or equal to 9.2
 */
-export const comparisonOperator = async () => {};
+export const comparisonOperator = async (db) => {
+  const movie = await db.collection('movieDetails').count({ 'imdb.rating': { $gt: 9, $lt: 9.2 } });
+  return movie;
+};
 
 /* Q8 (*)
   Return the number of movies which have an actual rating opposed to
@@ -103,6 +106,3 @@ export const addField = async () => {};
   Note: Do not use find() or findOne() to look for the current metacritic rating for "Gone Girl"
 */
 export const incrementalUpdate = async () => {};
-
-
-getMoviesCount();
