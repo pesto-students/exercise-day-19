@@ -34,7 +34,11 @@ export const movieRating = async () => {
   Damon Lindelof
   Gene Roddenberry
 */
-export const writersIntersection = async () => { };
+export const writersIntersection = async () => {
+  const writers = ['Roberto Orci', 'Alex Kurtzman', 'Damon Lindelof', 'Gene Roddenberry'];
+  const db = await getDb();
+  return await db.collection('movieDetails').count({ writers });
+};
 
 /* Q4 (*)
   Return the number of movies written by any of the writers in Q3
