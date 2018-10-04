@@ -2,13 +2,19 @@
   Return the title of a movie from the year 2013 that is rated PG-13 and
   won no awards. Query the video.movieDetails collection to find the answer.
 */
-export const noAwards = async () => {};
+export const noAwards = async (db) => {
+  const movie = await db.collection('movieDetails').findOne({year: 2013, rated: 'PG-13', 'awards.wins': 0}, { fields: { title: 1, _id: 0 } });
+  return movie;
+};
 
 /* Q2 (*)
   Return the number of movies in movieDetails collection list just the
   following two genres: "Comedy" and "Crime" with "Comedy" listed first.
 */
-export const arrayOrder = async () => {};
+export const arrayOrder = async (db) => {
+  const count = await db.collection('movieDetails').find({genres: ['Comedy', 'Crime'] }).count();
+  return count;
+};
 
 /* Q3 (*)
   Update the value of the "plot" field for the movie "The Martian".
@@ -20,7 +26,14 @@ export const arrayOrder = async () => {};
   Use updateOne() in this exercise.
 */
 
-export const martianPlot = async () => {};
+export const martianPlot = async (db) => {
+  const updateCount = await db.collection('movieDetails').updateOne({title: 'The Martian'}, {
+    $set: {
+      plot: 'A scientist gets trapped on Mars. To save his life, he devices a plan. He grows potatoes using his excretion as manure. He masterminds a loop where he eats those potatoes to accelerate excretion, using the same to grow more potatoes until he can find an old spaceship nearby to launch himself home.',
+    }
+  });
+  return updateCount;
+};
 
 /* Q4 (*)
   Create a new collection named "myMovies". Insert 5 movies with the following
@@ -33,19 +46,48 @@ export const martianPlot = async () => {};
   Note: Make sure the above (Godfather) document is one of the 5 movies inserted.
 */
 
-export const insertMovies = async () => {};
+export const insertMovies = async (db) => {
+  const myMovies = [
+    {
+      title: "The Godfather",
+      rating: 100
+    },
+    {
+      title: "Catch me if you can",
+      rating: 78
+    },
+    {
+      title: "Lord of the rings",
+      rating: 79
+    },
+    {
+      title: "Now you see me",
+      rating: 80
+    },
+    {
+      title: "Avengers",
+      rating: 85
+    },
+  ]
+  await db.createCollection('myMovies');
+  await db.collection('myMovies').insertMany(myMovies);
+};
 
 /* Q5 (*)
   Delete the movie with title = "The Godfather" from the collection "myMovies".
 */
 
-export const deleteMovie = async () => {};
+export const deleteMovie = async (db) => {
+  await db.collection('myMovies').remove({ title: 'The Godfather' });
+};
 
 /* Q6 (*)
   Delete all movies from the collection "myMovies".
 */
 
-export const deleteAllMovies = async () => {};
+export const deleteAllMovies = async (db) => {
+  await db.collection('myMovies').remove();
+};
 
 
 /* Q7 (*)
