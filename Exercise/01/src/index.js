@@ -29,7 +29,7 @@ export const movieRating = async () => {
 export const writersIntersection = async () => {
   const authors = ['Roberto Orci', 'Alex Kurtzman', 'Damon Lindelof', 'Gene Roddenberry'];
   const db = await getDb();
-  const count = await db.collection('movieDetails').find({ writers: { $all: authors } }).count();
+  const count = await db.collection('movieDetails').find({ writers: authors }).count();
   return count;
 };
 
@@ -148,4 +148,10 @@ export const addField = async () => {
   Increment the metacritic rating by 5 for the movie "Gone Girl" with a single query.
   Note: Do not use find() or findOne() to look for the current metacritic rating for "Gone Girl"
 */
-export const incrementalUpdate = async () => {};
+export const incrementalUpdate = async (db) => {
+  await db.collection('movieDetails').update({ title: 'Gone Girl' }, {
+    $inc: {
+      metacritic: 5,
+    },
+  });
+};
