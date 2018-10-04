@@ -92,7 +92,13 @@ export const trimUnrated = async () => {
 /* Q9 (*)
   Return number of movies in which "tomato" field exists but "tomato.rating" does not
 */
-export const unratedByTomato = async () => { };
+export const unratedByTomato = async () => {
+  const db = await getDb();
+  return await db.collection('movieDetails').count({
+    tomato: { $exists: true },
+    'tomato.rating': { $exists: false }
+  });
+};
 
 /* Q10 (*)
   Return number of movies with higher imdb rating >= 9.0 OR
