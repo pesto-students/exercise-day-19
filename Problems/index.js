@@ -5,7 +5,19 @@
   leapYears(2000) // is a leap year: returns true
   leapYears(1985) // is not a leap year: returns false
  */
-function leapYears() {}
+function leapYears(year) {
+  if (year % 4 !== 0) {
+    // no
+    return false;
+  } else if (year % 100 !== 0) {
+    // yes
+    return true;
+  } else if (year % 400 !== 0) {
+    // no
+    return false;
+  }
+  return true;
+}
 
 /** Q2
   Create a function that matches using wildcards.
@@ -46,13 +58,24 @@ function matcher() {}
  * Create a function to split lines into array of lines.
  * See test suite for more details.
  */
-function splitLines() {}
+function splitLines(arr) {
+  return arr.split('\n').map(el => el + '\n');
+}
 
 /** Q4
  * Create a function repeat a string without using String repeat method.
  * See test suite for more details.
  */
-function repeatString() {}
+function repeatString(num, str) {
+  if (num < 0) {
+    throw Error('Expected `count` to be a positive finite number, got `-5`');
+  } else if (num > 0 && typeof str !== 'string') {
+    throw Error('Expected `input` to be a `string`, got `number`');
+  } else if (typeof str === 'undefined') {
+    return ' '.repeat(num);
+  }
+  return str.repeat(num);
+}
 
 module.exports = {
   leapYears,
