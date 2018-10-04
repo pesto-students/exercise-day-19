@@ -13,7 +13,19 @@ export const getMoviesCount = async () => {
   Also, use mongodb projections to only get title from mongodb as opposed
   to accessing title property from the object
 */
-export const movieRating = async () => { };
+export const movieRating = async () => {
+  const db = await getDb();
+  return await db.collection('movieDetails').findOne({
+    year: 1974,
+    'imdb.rating': 9
+  }, {
+      projection: {
+        title: 1,
+        _id: 0
+      }
+    }
+  );
+};
 
 /* Q3 (*)
   Return the number of movies written by all these people (exactly these people in this order):
