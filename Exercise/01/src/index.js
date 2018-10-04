@@ -84,7 +84,10 @@ export const comparisonOperator = async () => {
   Return the number of movies which have an actual rating opposed to
   being "UNRATED" or having no "rated" field at all
 */
-export const trimUnrated = async () => { };
+export const trimUnrated = async () => {
+  const db = await getDb();
+  return await db.collection('movieDetails').count({ rated: { $exists: true, $ne: 'UNRATED' } });
+};
 
 /* Q9 (*)
   Return number of movies in which "tomato" field exists but "tomato.rating" does not
