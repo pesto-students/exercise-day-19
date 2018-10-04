@@ -68,11 +68,11 @@ function splitLines(arr) {
  */
 function repeatString(num, str) {
   if (num < 0) {
-    throw Error('Expected `count` to be a positive finite number, got `-5`');
-  } else if (num > 0 && typeof str !== 'string') {
-    throw Error('Expected `input` to be a `string`, got `number`');
+    throw new Error('Expected `count` to be a positive finite number, got `-5`');
   } else if (typeof str === 'undefined') {
     return ' '.repeat(num);
+  } else if (typeof str !== 'string') {
+    throw new Error('Expected `input` to be a `string`, got `number`');
   }
   return str.repeat(num);
 }
