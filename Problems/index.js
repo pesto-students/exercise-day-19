@@ -66,15 +66,23 @@ function splitLines(arr) {
  * Create a function repeat a string without using String repeat method.
  * See test suite for more details.
  */
-function repeatString(num, str) {
-  if (num < 0) {
+function repeatString(n, s) {
+  if (n < 0) {
     throw new Error('Expected `count` to be a positive finite number, got `-5`');
-  } else if (typeof str === 'undefined') {
-    return ' '.repeat(num);
-  } else if (typeof str !== 'string') {
+  } else if (typeof s === 'undefined') {
+    return ' '.repeat(n);
+  } else if (typeof s !== 'string') {
     throw new Error('Expected `input` to be a `string`, got `number`');
   }
-  return str.repeat(num);
+  // return str.repeat(num);
+  const l = s.length;
+  while (n > 1) {
+    for (let i = 0; i < l; i += 1) {
+      s += s.charAt(i);
+    }
+    n -= 1;
+  }
+  return s;
 }
 
 module.exports = {
