@@ -112,7 +112,12 @@ export const goodMovies = async () => { };
 */
 export const regexSearch = async () => {
   const db = await getDb();
-  return await db.collection('movieDetails').count({ $and: [{ tomato: null }, { tomato: { $exists: 1 } }] });
+  return await db.collection('movieDetails').findOne({
+    plot: /Master Yoda/
+  }, {
+      projection: { title: 1, _id: 0 }
+    }
+  );
 };
 
 /* Q12 (*)
