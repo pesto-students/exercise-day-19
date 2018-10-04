@@ -70,7 +70,15 @@ export const positionalActor = async () => {
   Return the first movie with imdb rating greater than or equal to 9.0
   and less than or equal to 9.2
 */
-export const comparisonOperator = async () => { };
+export const comparisonOperator = async () => {
+  const db = await getDb();
+  return await db.collection('movieDetails').count({
+    $and: [
+      { 'imdb.rating': { $gte: 9 } },
+      { 'imdb.rating': { $lte: 9.2 } }
+    ]
+  });
+};
 
 /* Q8 (*)
   Return the number of movies which have an actual rating opposed to
