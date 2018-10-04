@@ -119,7 +119,10 @@ export const regexSearch = async () => {
   Return number of movies where 'Adventure' and 'Action'
   as genres in any order
 */
-export const arrayAll = async () => { };
+export const arrayAll = async () => {
+  const db = await getDb();
+  return await db.collection('movieDetails').count({ $and: [{ genres: 'Adventure' }, { genres: 'Action' }] });
+};
 
 /* Q13 (*)
   Return number of movies that were filmed in exactly 4 countries
