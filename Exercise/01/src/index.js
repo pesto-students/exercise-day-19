@@ -149,4 +149,12 @@ export const addField = async () => {
   Increment the metacritic rating by 5 for the movie "Gone Girl" with a single query.
   Note: Do not use find() or findOne() to look for the current metacritic rating for "Gone Girl"
 */
-export const incrementalUpdate = async () => { };
+export const incrementalUpdate = async () => {
+  const db = await getDb();
+  return await db.collection('movieDetails').update({
+    title: 'Gone Girl'
+  }, {
+      $inc: { metacritic: 5 }
+    }
+  );
+};
