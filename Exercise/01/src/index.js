@@ -52,7 +52,10 @@ export const writersUnion = async () => {
 /* Q5 (*)
   Return the number of movies in which actor is "Jackie Chan"
 */
-export const actor = async () => { };
+export const actor = async () => {
+  const db = await getDb();
+  return await db.collection('movieDetails').count({ actors: 'Jackie Chan' });
+};
 
 /* Q6 (*)
   Return the number of movies in which actor "Jackie Chan" is second
