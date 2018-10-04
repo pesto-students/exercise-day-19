@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const ObjectId = require('mongodb').ObjectId;
 
 const { getDb } = require('./database');
 const util = require('./util');
@@ -36,6 +37,47 @@ app.route('/projects')
       }
     }
   });
+
+app.route('/project/:id')
+  .get(async (req, res, next) => {
+    try {
+      const db = await getDb();
+      const project = await db.collection('projects').findOne({ _id: new ObjectId(req.params.id) });
+      if (project === null) {
+        res.status(404).json({ error: 'no project with that id' });
+      } else {
+        res.json({ data: project });
+      }
+    } catch (e) {
+      res.json({ error: 'db error' });
+      next(e);
+    }
+  })
+  .patch(async (req, res, next) => {
+    try {
+      const db = await getDb();
+
+      const updateObj = util.extractSomeProps(req.body, ['developer', 'project']);
+
+      await db.collection('projects').updateOne({
+        _id: new ObjectId(req.params.id)
+      }, { $set: updateObj });
+      res.json({ message: 'success' });
+    } catch (e) {
+      res.json({ error: 'db error' });
+      next(e);
+    }
+  })
+  .delete(async (req, res, next) => {
+    try {
+      const db = await getDb();
+      await db.collection('projects').deleteOne({ _id: new ObjectId(req.params.id) });
+      res.json({ message: 'success' });
+    } catch (e) {
+      res.json({ error: 'db error' });
+      next(e);
+    }
+  })
 
 app.use((err, req, res, next) => {
   console.error(err);
