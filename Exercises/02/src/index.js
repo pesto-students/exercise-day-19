@@ -3,7 +3,7 @@
   won no awards. Query the video.movieDetails collection to find the answer.
 */
 export const noAwards = async (db) => {
-  const movie = await db.collection('movieDetails').findOne({year: 2013, rated: 'PG-13', 'awards.wins': 0}, { fields: { title: 1, _id: 0 } });
+  const movie = await db.collection('movieDetails').findOne({ year: 2013, rated: 'PG-13', 'awards.wins': 0 }, { fields: { title: 1, _id: 0 } });
   return movie;
 };
 
@@ -12,7 +12,7 @@ export const noAwards = async (db) => {
   following two genres: "Comedy" and "Crime" with "Comedy" listed first.
 */
 export const arrayOrder = async (db) => {
-  const count = await db.collection('movieDetails').find({genres: ['Comedy', 'Crime'] }).count();
+  const count = await db.collection('movieDetails').find({ genres: ['Comedy', 'Crime'] }).count();
   return count;
 };
 
@@ -27,10 +27,10 @@ export const arrayOrder = async (db) => {
 */
 
 export const martianPlot = async (db) => {
-  const updateCount = await db.collection('movieDetails').updateOne({title: 'The Martian'}, {
+  const updateCount = await db.collection('movieDetails').updateOne({ title: 'The Martian' }, {
     $set: {
       plot: 'A scientist gets trapped on Mars. To save his life, he devices a plan. He grows potatoes using his excretion as manure. He masterminds a loop where he eats those potatoes to accelerate excretion, using the same to grow more potatoes until he can find an old spaceship nearby to launch himself home.',
-    }
+    },
   });
   return updateCount;
 };
@@ -49,26 +49,26 @@ export const martianPlot = async (db) => {
 export const insertMovies = async (db) => {
   const myMovies = [
     {
-      title: "The Godfather",
-      rating: 100
+      title: 'The Godfather',
+      rating: 100,
     },
     {
-      title: "Catch me if you can",
-      rating: 78
+      title: 'Catch me if you can',
+      rating: 78,
     },
     {
-      title: "Lord of the rings",
-      rating: 79
+      title: 'Lord of the rings',
+      rating: 79,
     },
     {
-      title: "Now you see me",
-      rating: 80
+      title: 'Now you see me',
+      rating: 80,
     },
     {
-      title: "Avengers",
-      rating: 85
+      title: 'Avengers',
+      rating: 85,
     },
-  ]
+  ];
   await db.createCollection('myMovies');
   await db.collection('myMovies').insertMany(myMovies);
 };
@@ -99,4 +99,14 @@ export const deleteAllMovies = async (db) => {
   - The tomato.consensus field is null
 */
 
-export const removeConsensus = async () => {};
+export const removeConsensus = async (db) => {
+  await db.collection('movieDetails').update({
+    'imdb.votes': { $lt: 10000 },
+    year: { $gte: 2010, $lte: 2013 },
+    'tomato.consensus': { $exits: true, $eq: null },
+  }, {
+    $unset: {
+      'tomato.consensus': 1,
+    },
+  });
+};
