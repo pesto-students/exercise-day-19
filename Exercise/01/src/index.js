@@ -104,7 +104,15 @@ export const unratedByTomato = async () => {
   Return number of movies with higher imdb rating >= 9.0 OR
   metacritic >= 90
 */
-export const goodMovies = async () => { };
+export const goodMovies = async () => {
+  const db = await getDb();
+  return await db.collection('movieDetails').count({
+    $or: [
+      { 'imdb.rating': { $gte: 9 } },
+      { metacritic: { $gte: 90 } }
+    ]
+  });
+};
 
 /* Q11 (*)
   Return number of movies where tomato field exists AND
