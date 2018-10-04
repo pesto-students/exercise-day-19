@@ -110,7 +110,10 @@ export const goodMovies = async () => { };
   Return number of movies where tomato field exists AND
   is equal to null
 */
-export const regexSearch = async () => { };
+export const regexSearch = async () => {
+  const db = await getDb();
+  return await db.collection('movieDetails').count({ $and: [{ tomato: null }, { tomato: { $exists: 1 } }] });
+};
 
 /* Q12 (*)
   Return number of movies where 'Adventure' and 'Action'
