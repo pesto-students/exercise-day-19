@@ -135,7 +135,15 @@ export const fieldArraySize = async () => {
 /* Q14 (*)
   Add a field called "myRating" = 90 to the movie "Iron Man 3" in movieDetails collection
 */
-export const addField = async () => { };
+export const addField = async () => {
+  const db = await getDb();
+  return await db.collection('movieDetails').update({
+    title: 'Iron Man 3'
+  }, {
+      $set: { myRating: 88 }
+    }
+  );
+};
 
 /* Q15 (*)
   Increment the metacritic rating by 5 for the movie "Gone Girl" with a single query.
