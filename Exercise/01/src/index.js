@@ -127,7 +127,10 @@ export const arrayAll = async () => {
 /* Q13 (*)
   Return number of movies that were filmed in exactly 4 countries
 */
-export const fieldArraySize = async () => { };
+export const fieldArraySize = async () => {
+  const db = await getDb();
+  return await db.collection('movieDetails').count({ countries: { $size: 4 } });
+};
 
 /* Q14 (*)
   Add a field called "myRating" = 90 to the movie "Iron Man 3" in movieDetails collection
