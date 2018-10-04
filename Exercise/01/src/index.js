@@ -43,7 +43,11 @@ export const writersIntersection = async () => {
 /* Q4 (*)
   Return the number of movies written by any of the writers in Q3
 */
-export const writersUnion = async () => { };
+export const writersUnion = async () => {
+  const writers = ['Roberto Orci', 'Alex Kurtzman', 'Damon Lindelof', 'Gene Roddenberry'];
+  const db = await getDb();
+  return await db.collection('movieDetails').count({ writers: { $in: writers } });
+};
 
 /* Q5 (*)
   Return the number of movies in which actor is "Jackie Chan"
