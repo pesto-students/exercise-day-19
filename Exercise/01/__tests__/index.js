@@ -96,7 +96,7 @@ describe('Mongo Queries', () => {
     // 10
     describe('goodMovies', () => {
       test('should return number of movies with higher imdb rating >= 9.0 OR metacritic >= 90', async () => {
-        expect(await goodMovies(db)).toBe(27);
+        expect(await goodMovies(db)).toBe(26);
       });
     });
 
